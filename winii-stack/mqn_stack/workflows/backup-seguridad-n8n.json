@@ -1,0 +1,435 @@
+{
+  "name": "MQN Backup y Seguridad - n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hour",
+              "expression": "*/6"
+            }
+          ]
+        }
+      },
+      "id": "trigger-backup",
+      "name": "Trigger Backup",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar timestamp para el backup\nconst timestamp = new Date().toISOString().replace(/[:.]/g, '-');\nconst backupInfo = {\n  timestamp,\n  fecha: new Date().toLocaleString('es-MX'),\n  version: '1.0.0',\n  sistema: 'MQN',\n  tipo: 'backup_automatico'\n};\n\nreturn backupInfo;"
+      },
+      "id": "generar-timestamp",
+      "name": "Generar Timestamp",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "url": "http://localhost:5679/api/v1/workflows",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "mqn_api_key_2024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "exportar-workflows",
+      "name": "Exportar Workflows",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "url": "http://localhost:5679/api/v1/credentials",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "mqn_api_key_2024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "exportar-credentials",
+      "name": "Exportar Credentials",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "url": "http://localhost:5679/api/v1/executions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "mqn_api_key_2024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "exportar-executions",
+      "name": "Exportar Executions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM conversaciones ORDER BY timestamp DESC LIMIT 1000;",
+        "additionalFields": {}
+      },
+      "id": "backup-conversaciones",
+      "name": "Backup Conversaciones",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [680, 500]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM productos ORDER BY id DESC LIMIT 1000;",
+        "additionalFields": {}
+      },
+      "id": "backup-productos",
+      "name": "Backup Productos",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [680, 600]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Crear estructura de backup\nconst timestamp = $('Generar Timestamp').item.json.timestamp;\nconst backupData = {\n  metadata: $('Generar Timestamp').item.json,\n  workflows: $('Exportar Workflows').item.json,\n  credentials: $('Exportar Credentials').item.json,\n  executions: $('Exportar Executions').item.json,\n  conversaciones: $('Backup Conversaciones').item.json,\n  productos: $('Backup Productos').item.json,\n  knowledge_base: {\n    empresa: 'knowledge_base/empresa/',\n    productos: 'knowledge_base/productos/',\n    clientes: 'knowledge_base/clientes/',\n    reglas: 'knowledge_base/reglas/',\n    archivos_fotograficos: 'knowledge_base/archivos_fotograficos/'\n  }\n};\n\nreturn {\n  backupData,\n  filename: `mqn_backup_${timestamp}.json`\n};"
+      },
+      "id": "crear-backup",
+      "name": "Crear Backup",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "operation": "writeFile",
+        "filePath": "backups/{{ $json.filename }}",
+        "fileName": "={{ $json.filename }}",
+        "dataPropertyName": "backupData"
+      },
+      "id": "guardar-backup",
+      "name": "Guardar Backup",
+      "type": "n8n-nodes-base.writeFile",
+      "typeVersion": 1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO logs_sistema (timestamp, evento, descripcion, estado) VALUES ($1, $2, $3, $4);",
+        "additionalFields": {
+          "queryReplacement": "{{ new Date().toISOString() }}, backup_automatico, Backup completado: {{ $json.filename }}, exitoso"
+        }
+      },
+      "id": "log-backup",
+      "name": "Log Backup",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "check-backup-success",
+              "leftValue": "={{ $json.filename }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "verificar-backup",
+      "name": "Verificar Backup",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1560, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar reporte de backup exitoso\nconst reporte = {\n  status: 'success',\n  timestamp: new Date().toISOString(),\n  filename: $('Crear Backup').item.json.filename,\n  elementos: {\n    workflows: $('Exportar Workflows').item.json.length || 0,\n    credentials: $('Exportar Credentials').item.json.length || 0,\n    executions: $('Exportar Executions').item.json.length || 0,\n    conversaciones: $('Backup Conversaciones').item.json.length || 0,\n    productos: $('Backup Productos').item.json.length || 0\n  },\n  mensaje: '✅ Backup completado exitosamente'\n};\n\nreturn reporte;"
+      },
+      "id": "reporte-exitoso",
+      "name": "Reporte Exitoso",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar reporte de error\nconst reporte = {\n  status: 'error',\n  timestamp: new Date().toISOString(),\n  error: 'Backup falló',\n  mensaje: '❌ Error en el proceso de backup'\n};\n\nreturn reporte;"
+      },
+      "id": "reporte-error",
+      "name": "Reporte Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 400]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8080/instance/connect",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "mqn_evolution_key_2024"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "9671262441"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.mensaje }}\\n\\n📊 Elementos respaldados:\\n• Workflows: {{ $json.elementos.workflows }}\\n• Credentials: {{ $json.elementos.credentials }}\\n• Executions: {{ $json.elementos.executions }}\\n• Conversaciones: {{ $json.elementos.conversaciones }}\\n• Productos: {{ $json.elementos.productos }}\\n\\n📁 Archivo: {{ $json.filename }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "notificar-backup",
+      "name": "Notificar Backup",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2000, 300]
+    }
+  ],
+  "connections": {
+    "Trigger Backup": {
+      "main": [
+        [
+          {
+            "node": "Generar Timestamp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Timestamp": {
+      "main": [
+        [
+          {
+            "node": "Exportar Workflows",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Exportar Credentials",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Exportar Executions",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Backup Conversaciones",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Backup Productos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exportar Workflows": {
+      "main": [
+        [
+          {
+            "node": "Crear Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exportar Credentials": {
+      "main": [
+        [
+          {
+            "node": "Crear Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exportar Executions": {
+      "main": [
+        [
+          {
+            "node": "Crear Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup Conversaciones": {
+      "main": [
+        [
+          {
+            "node": "Crear Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup Productos": {
+      "main": [
+        [
+          {
+            "node": "Crear Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Backup": {
+      "main": [
+        [
+          {
+            "node": "Guardar Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Backup": {
+      "main": [
+        [
+          {
+            "node": "Log Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Backup": {
+      "main": [
+        [
+          {
+            "node": "Verificar Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar Backup": {
+      "main": [
+        [
+          {
+            "node": "Reporte Exitoso",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reporte Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reporte Exitoso": {
+      "main": [
+        [
+          {
+            "node": "Notificar Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reporte Error": {
+      "main": [
+        [
+          {
+            "node": "Notificar Backup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "1",
+      "name": "MQN"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-01T00:00:00.000Z",
+  "versionId": "1"
+}
