@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Base de datos
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: mqn_db
+      POSTGRES_USER: mqn_user
+      POSTGRES_PASSWORD: mqn_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./config/database.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Cache y broker
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+
+  # n8n para automatización
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5679:5678"
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: mqn_db
+      DB_POSTGRESDB_USER: mqn_user
+      DB_POSTGRESDB_PASSWORD: mqn_password
+      N8N_BASIC_AUTH_ACTIVE: true
+      N8N_BASIC_AUTH_USER: mediaqualitynet@gmail.com
+      N8N_BASIC_AUTH_PASSWORD: Cadena
+      WEBHOOK_URL: http://localhost:5678
+      GENERIC_TIMEZONE: America/Mexico_City
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./workflows:/home/node/.n8n/workflows
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+  redis_data:
+  n8n_data:

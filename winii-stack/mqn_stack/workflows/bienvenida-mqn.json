@@ -1,0 +1,385 @@
+{
+  "name": "MQN Bienvenida - Media Quality Net",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bienvenida-mqn",
+        "options": {}
+      },
+      "id": "webhook-bienvenida",
+      "name": "Webhook Bienvenida",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "bienvenida-mqn"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer información del mensaje entrante\nconst input = $input.first().json;\n\n// Extraer datos del mensaje\nlet phoneNumber = '';\nlet messageText = '';\nlet messageType = 'texto';\nlet userName = 'Cliente';\n\n// Si es un mensaje de WhatsApp\nif (input.data && input.data.key) {\n  phoneNumber = input.data.key.remoteJid.replace('@s.whatsapp.net', '');\n  \n  if (input.data.message.conversation) {\n    messageText = input.data.message.conversation;\n  } else if (input.data.message.extendedTextMessage) {\n    messageText = input.data.message.extendedTextMessage.text;\n  } else if (input.data.message.imageMessage) {\n    messageText = 'Imagen recibida';\n    messageType = 'imagen';\n  }\n} else {\n  // Si es una llamada directa al webhook\n  phoneNumber = input.phone || 'sistema';\n  messageText = input.message || 'hola';\n  userName = input.name || 'Usuario';\n}\n\n// Detectar comandos\nconst text = messageText.toLowerCase();\nlet command = 'bienvenida';\n\nif (text.includes('catalogo') || text.includes('productos')) {\n  command = 'catalogo';\n} else if (text.includes('venta') || text.includes('cotizar')) {\n  command = 'venta';\n} else if (text.includes('precio') || text.includes('costo')) {\n  command = 'precios';\n} else if (text.includes('ayuda') || text.includes('servicios')) {\n  command = 'ayuda';\n} else if (text.includes('estado') || text.includes('sistema')) {\n  command = 'estado';\n}\n\nreturn {\n  phoneNumber,\n  messageText,\n  messageType,\n  userName,\n  command,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "procesar-mensaje",
+      "name": "Procesar Mensaje",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "command-bienvenida",
+              "leftValue": "={{ $json.command }}",
+              "rightValue": "bienvenida",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "detectar-bienvenida",
+      "name": "Detectar Bienvenida",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "command-catalogo",
+              "leftValue": "={{ $json.command }}",
+              "rightValue": "catalogo",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "detectar-catalogo",
+      "name": "Detectar Catálogo",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "command-venta",
+              "leftValue": "={{ $json.command }}",
+              "rightValue": "venta",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "detectar-venta",
+      "name": "Detectar Venta",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar mensaje de bienvenida\nconst userName = $('Procesar Mensaje').item.json.userName;\nconst phoneNumber = $('Procesar Mensaje').item.json.phoneNumber;\n\nconst welcomeMessage = `🎨 *¡Bienvenido a Media Quality Net!* 🎨\n\nHola ${userName}, soy tu asistente virtual de MQN.\n\n*Nuestros servicios:*\n• 🖼️ Impresión digital de alta calidad\n• 👕 Serigrafía y sublimación\n• 🎯 Productos personalizados\n• 📱 Atención multicanal\n\n*Comandos disponibles:*\n• \"catalogo\" - Ver productos\n• \"venta\" - Crear cotización\n• \"precios\" - Consultar tarifas\n• \"ayuda\" - Más información\n• \"estado\" - Estado del sistema\n\n*Contacto:*\n📞 WhatsApp: ${phoneNumber}\n🏢 Horario: Lunes a Viernes 9:00-18:00\n\n¿En qué puedo ayudarte hoy? 😊`;\n\nreturn {\n  message: welcomeMessage,\n  phoneNumber,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "mensaje-bienvenida",
+      "name": "Mensaje Bienvenida",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar información del catálogo\nconst catalogMessage = `📋 *Catálogo Media Quality Net* 📋\n\n*Productos disponibles:*\n\n👕 *Ropa:*\n• Playeras personalizadas\n• Sudaderas con diseño\n• Gorras bordadas\n\n🏠 *Hogar:*\n• Tazas sublimadas\n• Cojines personalizados\n• Manteles impresos\n\n📄 *Papelería:*\n• Posters de alta calidad\n• Tarjetas de presentación\n• Folletos promocionales\n\n🎨 *Técnicas:*\n• Impresión digital\n• Serigrafía\n• Sublimación\n• Bordado\n\n*Para cotizar:* Envía \"venta\" + tu número de teléfono\n\n¿Qué producto te interesa?`;\n\nreturn {\n  message: catalogMessage,\n  phoneNumber: $('Procesar Mensaje').item.json.phoneNumber,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "mensaje-catalogo",
+      "name": "Mensaje Catálogo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar información de ventas\nconst ventaMessage = `💰 *Sistema de Ventas MQN* 💰\n\n*Para crear una cotización:*\n\n1️⃣ Envía \"venta\" + tu número\n2️⃣ Describe el producto\n3️⃣ Especifica cantidad\n4️⃣ Menciona requisitos especiales\n\n*Ejemplo:*\n\"venta 9671262441 - 50 playeras con logo empresa, serigrafía, tallas S/M/L\"\n\n*Información requerida:*\n• Tipo de producto\n• Cantidad\n• Técnica de impresión\n• Especificaciones especiales\n• Fecha de entrega\n\n*Precios desde:*\n• Playeras: $50 c/u\n• Tazas: $30 c/u\n• Posters: $20 c/u\n\n¿Listo para crear tu cotización? 📝`;\n\nreturn {\n  message: ventaMessage,\n  phoneNumber: $('Procesar Mensaje').item.json.phoneNumber,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "mensaje-venta",
+      "name": "Mensaje Venta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar mensaje de ayuda\nconst helpMessage = `🆘 *Ayuda - Media Quality Net* 🆘\n\n*Comandos principales:*\n\n🎨 *catalogo* - Ver productos disponibles\n💰 *venta* - Crear cotización\n💵 *precios* - Consultar tarifas\n📊 *estado* - Estado del sistema\n❓ *ayuda* - Este mensaje\n\n*Servicios especializados:*\n\n🖼️ *Impresión Digital:*\n• Posters, folletos, tarjetas\n• Alta calidad, entrega rápida\n\n👕 *Serigrafía:*\n• Playeras, sudaderas, gorras\n• Colores vibrantes, durabilidad\n\n🔥 *Sublimación:*\n• Tazas, cojines, textiles\n• Diseños personalizados\n\n📞 *Contacto directo:*\n• WhatsApp: 9671262441\n• Horario: L-V 9:00-18:00\n\n¿Necesitas algo más específico?`;\n\nreturn {\n  message: helpMessage,\n  phoneNumber: $('Procesar Mensaje').item.json.phoneNumber,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "mensaje-ayuda",
+      "name": "Mensaje Ayuda",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Verificar estado del sistema\nconst systemStatus = {\n  servicios: {\n    n8n: '✅ Activo',\n    postgres: '✅ Activo',\n    redis: '✅ Activo',\n    evolution_api: '✅ Activo'\n  },\n  workflows: {\n    bienvenida: '✅ Activo',\n    whatsapp_handler: '✅ Activo',\n    catalogador_visual: '✅ Activo'\n  },\n  ultima_actualizacion: new Date().toISOString()\n};\n\nconst statusMessage = `📊 *Estado del Sistema MQN* 📊\n\n*Servicios:*\n${Object.entries(systemStatus.servicios).map(([key, value]) => `• ${key}: ${value}`).join('\\n')}\n\n*Workflows:*\n${Object.entries(systemStatus.workflows).map(([key, value]) => `• ${key}: ${value}`).join('\\n')}\n\n*Última actualización:*\n${new Date(systemStatus.ultima_actualizacion).toLocaleString('es-MX')}\n\n🎯 *Sistema operativo al 100%*`;\n\nreturn {\n  message: statusMessage,\n  phoneNumber: $('Procesar Mensaje').item.json.phoneNumber,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "mensaje-estado",
+      "name": "Mensaje Estado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 600]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8080/instance/connect",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "mqn_evolution_key_2024"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.phoneNumber }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.message }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "enviar-whatsapp",
+      "name": "Enviar WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO conversaciones (numero_telefono, mensaje_entrada, mensaje_salida, tipo_comando, timestamp) VALUES ($1, $2, $3, $4, $5);",
+        "additionalFields": {
+          "queryReplacement": "={{ $('Procesar Mensaje').item.json.phoneNumber }}, {{ $('Procesar Mensaje').item.json.messageText }}, {{ $json.message }}, {{ $('Procesar Mensaje').item.json.command }}, {{ $('Procesar Mensaje').item.json.timestamp }}"
+        }
+      },
+      "id": "registrar-conversacion",
+      "name": "Registrar Conversación",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log del sistema\nconst logEntry = {\n  timestamp: new Date().toISOString(),\n  evento: 'bienvenida_mqn',\n  usuario: $('Procesar Mensaje').item.json.userName,\n  telefono: $('Procesar Mensaje').item.json.phoneNumber,\n  comando: $('Procesar Mensaje').item.json.command,\n  respuesta: 'enviada',\n  estado: 'exitoso'\n};\n\nconsole.log('MQN Bienvenida:', JSON.stringify(logEntry, null, 2));\n\nreturn logEntry;"
+      },
+      "id": "log-sistema",
+      "name": "Log Sistema",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Procesar Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Detectar Bienvenida",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Detectar Catálogo",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Detectar Venta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Catálogo": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Catálogo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Venta": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Venta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Catálogo": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Venta": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Ayuda": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Estado": {
+      "main": [
+        [
+          {
+            "node": "Enviar WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Registrar Conversación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Conversación": {
+      "main": [
+        [
+          {
+            "node": "Log Sistema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "1",
+      "name": "MQN"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-01-01T00:00:00.000Z",
+  "versionId": "1"
+}

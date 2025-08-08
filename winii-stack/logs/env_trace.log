@@ -1,0 +1,8 @@
+📦 Cargando entorno desde .env — 2025-08-07 13:22:50
+✔️ ENABLE_REDIS=true
+✔️ REDIS_PORT=6379
+✔️ ENABLE_POSTGRES=true
+✔️ POSTGRES_PORT=5432
+✔️ ENABLE_N8N=true
+✔️ N8N_PORT=5678
+✅ Entorno cargado y validado correctamente

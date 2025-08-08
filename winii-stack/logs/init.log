@@ -1,0 +1,1146 @@
+[INIT] Inicio - 2025-08-06 10:49:29
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INSTALL] Iniciando instalación del stack...
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INSTALL] Iniciando instalación del stack...
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+❌ Opción inválida. Intenta nuevamente.
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+❌ Falta dependencia: gomplate
+[INSTALL] Deploy con Docker Compose...
+[INSTALL] Stack instalado correctamente 🟢
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+❌ Falta dependencia: gomplate
+[INSTALL] Deploy con Docker Compose...
+[INSTALL] Stack instalado correctamente 🟢
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-06 10:54:41
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INSTALL] Iniciando instalación del stack...
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+❌ Opción inválida. Intenta nuevamente.
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+❌ Falta dependencia: gomplate
+[INSTALL] Deploy con Docker Compose...
+[INSTALL] Stack instalado correctamente 🟢
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-06 11:13:46
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INSTALL] Iniciando instalación del stack...
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+❌ Opción inválida. Intenta nuevamente.
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+❌ Falta dependencia: gomplate
+[INSTALL] Deploy con Docker Compose...
+[INSTALL] Stack instalado correctamente 🟢
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+[INIT] Inicio - 2025-08-06 11:37:38
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+[INIT] Inicio - 2025-08-06 11:40:13
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INSTALL] Iniciando instalación del stack...
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+❌ Opción inválida. Intenta nuevamente.
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+❌ Falta dependencia: gomplate
+[INSTALL] Deploy con Docker Compose...
+[INSTALL] Stack instalado correctamente 🟢
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-06 11:48:06
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INSTALL] Iniciando instalación del stack...
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+❌ Falta dependencia: gomplate
+[INSTALL] Deploy con Docker Compose...
+[INSTALL] Stack instalado correctamente 🟢
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INIT] Inicio - 2025-08-06 11:52:54
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+[INIT] Inicio - 2025-08-06 12:41:20
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-06 13:38:32
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+[INSTALL] Instalando 'gomplate'...
+✅ 'gomplate' instalado en /usr/local/bin/gomplate
+¿Activar Redis? (s/n)
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+
+[VALIDATE] Todo OK ✅
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+❌ Error en gomplate (code: 1)
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+❌ Error en gomplate (code: 1)
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+
+[VALIDATE] Todo OK ✅
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+❌ Error en gomplate (code: 1)
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+❌ Error en gomplate (code: 1)
+[INIT] Estado de contenedores:
+NAMES     STATUS
+[INIT] Inicio - 2025-08-06 13:56:58
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-06 14:03:34
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-06 14:08:49
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-06 17:08:59
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-07 07:31:22
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+[INIT] Estado de contenedores:
+NAMES     STATUS
+[INIT] Inicio - 2025-08-07 08:34:52
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+[INIT] Estado de contenedores:
+NAMES     STATUS
+[INIT] Inicio - 2025-08-07 08:51:42
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔐 Activando permisos de ejecución en scripts esenciales...
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-07 08:54:08
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-07 09:05:45
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-07 09:11:30
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+[INIT] Inicio - 2025-08-07 09:47:32
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto  disponible
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto  disponible
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+[INIT] Estado de contenedores:
+[INIT] Inicio - 2025-08-07 10:51:05
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto  disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+
+[VALIDATE] Todo OK ✅
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto  disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+
+[VALIDATE] Todo OK ✅
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+[INIT] Estado de contenedores:

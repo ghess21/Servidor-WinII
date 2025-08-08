@@ -1,0 +1,26 @@
+[MQN INIT] Inicio - 2025-08-08 07:34:32
+[MQN INIT] Verificando requisitos...
+[MQN INIT] ✅ Requisitos verificados
+[MQN INIT] Preparando base de datos...
+[MQN INIT] ✅ Base de datos preparada
+[MQN INIT] Iniciando servicios...
+[MQN INIT] Esperando que los servicios estén listos...
+[MQN INIT] Verificando servicios...
+[MQN INIT] ✅ PostgreSQL funcionando
+[MQN INIT] ✅ Redis funcionando
+[MQN INIT] ❌ Evolution API no está funcionando
+[MQN INIT] ✅ n8n funcionando
+[MQN INIT] Estado de contenedores:
+NAME                   IMAGE              COMMAND                  SERVICE    CREATED          STATUS          PORTS
+mqn_stack-n8n-1        n8nio/n8n:latest   "tini -- /docker-ent…"   n8n        42 seconds ago   Up 33 seconds   0.0.0.0:5679->5678/tcp, [::]:5679->5678/tcp
+mqn_stack-postgres-1   postgres:16        "docker-entrypoint.s…"   postgres   48 seconds ago   Up 37 seconds   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+mqn_stack-redis-1      redis:7-alpine     "docker-entrypoint.s…"   redis      48 seconds ago   Up 37 seconds   0.0.0.0:6380->6379/tcp, [::]:6380->6379/tcp
+[MQN INIT] URLs de acceso:
+  - n8n: http://localhost:5678 (admin/mqn_admin_2024)
+  - Evolution API: http://localhost:8080
+  - PostgreSQL: localhost:5432
+  - Redis: localhost:6379
+[MQN INIT] Configurando Evolution API...
+[MQN INIT] ✅ Instancia de Evolution API creada
+[MQN INIT] ✅ Inicialización completada exitosamente
+[MQN INIT] 🎯 MQN está listo para usar!

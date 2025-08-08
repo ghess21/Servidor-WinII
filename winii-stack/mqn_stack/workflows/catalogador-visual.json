@@ -1,0 +1,221 @@
+{
+  "name": "MQN Catalogador Visual",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "catalogador-visual",
+        "options": {}
+      },
+      "id": "webhook-catalogador",
+      "name": "Webhook Catalogador",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "catalogador-visual"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as total FROM productos WHERE imagen_path LIKE $1",
+        "additionalFields": {
+          "queryReplacement": "{{ $json.imagen_path }}"
+        }
+      },
+      "id": "check-duplicate",
+      "name": "Verificar Duplicado",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "duplicate-check",
+              "leftValue": "={{ $json.total }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter-duplicate",
+      "name": "Filtrar Duplicados",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8081/ocr",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "image",
+              "value": "={{ $json.imagen_path }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ocr-process",
+      "name": "Procesar OCR",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Analizar imagen y extraer información\nconst imagePath = $input.first().json.imagen_path;\nconst ocrText = $('Procesar OCR').item.json.text || '';\n\n// Clasificar tipo de producto basado en OCR y nombre de archivo\nlet categoria = 'general';\nlet material = 'no especificado';\nlet tecnica = 'no especificada';\nlet nombre = imagePath.split('/').pop().replace(/\\.[^/.]+$/, '');\n\n// Análisis básico de texto OCR\nif (ocrText.toLowerCase().includes('papel')) {\n  material = 'papel';\n} else if (ocrText.toLowerCase().includes('tela')) {\n  material = 'tela';\n} else if (ocrText.toLowerCase().includes('plastico')) {\n  material = 'plastico';\n}\n\nif (ocrText.toLowerCase().includes('serigrafia')) {\n  tecnica = 'serigrafia';\n} else if (ocrText.toLowerCase().includes('sublimacion')) {\n  tecnica = 'sublimacion';\n} else if (ocrText.toLowerCase().includes('impresion')) {\n  tecnica = 'impresion digital';\n}\n\n// Clasificar categoría\nif (imagePath.toLowerCase().includes('playera') || ocrText.toLowerCase().includes('playera')) {\n  categoria = 'ropa';\n} else if (imagePath.toLowerCase().includes('taza') || ocrText.toLowerCase().includes('taza')) {\n  categoria = 'hogar';\n} else if (imagePath.toLowerCase().includes('poster') || ocrText.toLowerCase().includes('poster')) {\n  categoria = 'papeleria';\n}\n\n// Calcular precio base (lógica simple)\nlet precioBase = 50.00;\nif (material === 'tela') precioBase += 30;\nif (tecnica === 'serigrafia') precioBase += 20;\nif (tecnica === 'sublimacion') precioBase += 25;\n\nreturn {\n  nombre,\n  categoria,\n  material,\n  tecnica_impresion: tecnica,\n  precio_base: precioBase,\n  precio_venta: precioBase * 1.5, // 50% margen\n  imagen_path: imagePath,\n  ocr_text: ocrText\n};"
+      },
+      "id": "analyze-image",
+      "name": "Analizar Imagen",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO productos (nombre, descripcion, categoria, material, tecnica_impresion, precio_base, precio_venta, imagen_path) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;",
+        "additionalFields": {
+          "queryReplacement": "{{ $json.nombre }}, {{ $json.ocr_text }}, {{ $json.categoria }}, {{ $json.material }}, {{ $json.tecnica_impresion }}, {{ $json.precio_base }}, {{ $json.precio_venta }}, {{ $json.imagen_path }}"
+        }
+      },
+      "id": "insert-product",
+      "name": "Insertar Producto",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO logs_sistema (modulo, accion, detalles, nivel) VALUES ('catalogador_visual', 'producto_creado', $1, 'info');",
+        "additionalFields": {
+          "queryReplacement": "{{ JSON.stringify($json) }}"
+        }
+      },
+      "id": "log-product",
+      "name": "Registrar Producto",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [1560, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  mensaje: 'Producto duplicado detectado',\n  imagen_path: $input.first().json.imagen_path,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "duplicate-response",
+      "name": "Respuesta Duplicado",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 400]
+    }
+  ],
+  "connections": {
+    "Webhook Catalogador": {
+      "main": [
+        [
+          {
+            "node": "Verificar Duplicado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verificar Duplicado": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Duplicados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Duplicados": {
+      "main": [
+        [
+          {
+            "node": "Procesar OCR",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respuesta Duplicado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar OCR": {
+      "main": [
+        [
+          {
+            "node": "Analizar Imagen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analizar Imagen": {
+      "main": [
+        [
+          {
+            "node": "Insertar Producto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insertar Producto": {
+      "main": [
+        [
+          {
+            "node": "Registrar Producto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-08-07T20:30:00.000Z",
+      "updatedAt": "2024-08-07T20:30:00.000Z",
+      "id": "catalogador-visual",
+      "name": "MQN"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-08-07T20:30:00.000Z",
+  "versionId": "1"
+}

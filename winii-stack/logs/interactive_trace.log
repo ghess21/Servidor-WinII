@@ -1,0 +1,121 @@
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+✔️ Redis: s
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+🔧 Asistente avanzado — Configuración modular
+❌ Falta gomplate. ¿Instalar automáticamente? (s/n)
+✔️ Redis: s
+🔌 Redis port seleccionado: 6379
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+
+[VALIDATE] Todo OK ✅
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+❌ Error en gomplate (code: 1)
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+❌ Error en gomplate (code: 1)
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔌 Redis port seleccionado: 6379
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔌 Redis port seleccionado: 6379
+❌ Variable obligatoria no definida: ENABLE_REDIS
+❌ Variable obligatoria no definida: ENABLE_REDIS
+🔧 Asistente avanzado — Configuración modular
+🔧 Asistente avanzado — Configuración modular
+🔧 Asistente avanzado — Configuración modular
+🔧 Asistente avanzado — Configuración modular
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔌 Redis port seleccionado: 6379
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto  disponible
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+🔧 Asistente avanzado — Configuración modular
+✔️ Redis: s
+🔌 Redis port seleccionado: 6379
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto  disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+
+[VALIDATE] Todo OK ✅
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml

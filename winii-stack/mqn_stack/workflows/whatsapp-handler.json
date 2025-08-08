@@ -1,0 +1,286 @@
+{
+  "name": "MQN WhatsApp Handler",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mqn-whatsapp",
+        "options": {}
+      },
+      "id": "webhook-whatsapp",
+      "name": "Webhook WhatsApp",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "mqn-whatsapp"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "event-type",
+              "leftValue": "={{ $json.event }}",
+              "rightValue": "messages.upsert",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter-events",
+      "name": "Filtrar Eventos",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer información del mensaje\nconst message = $input.first().json.data.key;\nconst messageContent = $input.first().json.data.message;\n\n// Extraer número de teléfono\nconst phoneNumber = message.remoteJid.replace('@s.whatsapp.net', '');\n\n// Extraer contenido del mensaje\nlet textContent = '';\nlet messageType = 'texto';\n\nif (messageContent.conversation) {\n  textContent = messageContent.conversation;\n} else if (messageContent.extendedTextMessage) {\n  textContent = messageContent.extendedTextMessage.text;\n} else if (messageContent.imageMessage) {\n  textContent = 'Imagen recibida';\n  messageType = 'imagen';\n} else if (messageContent.audioMessage) {\n  textContent = 'Audio recibido';\n  messageType = 'audio';\n} else if (messageContent.documentMessage) {\n  textContent = 'Documento recibido';\n  messageType = 'documento';\n}\n\nreturn {\n  phoneNumber,\n  textContent,\n  messageType,\n  timestamp: new Date().toISOString(),\n  rawMessage: $input.first().json\n};"
+      },
+      "id": "extract-message",
+      "name": "Extraer Mensaje",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "command-venta",
+              "leftValue": "={{ $json.textContent.toLowerCase() }}",
+              "rightValue": "venta",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "detect-commands",
+      "name": "Detectar Comandos",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8080/instance/connect",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "mqn_evolution_key_2024"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.phoneNumber }}"
+            },
+            {
+              "name": "instanceName",
+              "value": "mqn-instance"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "connect-evolution",
+      "name": "Conectar Evolution API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8080/message/sendText/mqn-instance",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "mqn_evolution_key_2024"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Extraer Mensaje').item.json.phoneNumber }}"
+            },
+            {
+              "name": "text",
+              "value": "¡Hola! Soy MQN, tu asistente de ventas. ¿En qué puedo ayudarte?\n\nComandos disponibles:\n- 'venta': Crear nueva venta\n- 'catalogo': Ver productos\n- 'cliente': Información de cliente\n- 'ayuda': Ver todos los comandos"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "send-welcome",
+      "name": "Enviar Mensaje Bienvenida",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO conversaciones (cliente_id, mensaje, tipo, direccion) VALUES (\n  (SELECT id FROM clientes WHERE telefono = $1 LIMIT 1),\n  $2,\n  $3,\n  'entrada'\n) ON CONFLICT DO NOTHING;",
+        "additionalFields": {
+          "queryReplacement": "={{ $json.phoneNumber }}, {{ $json.textContent }}, {{ $json.messageType }}"
+        }
+      },
+      "id": "log-conversation",
+      "name": "Registrar Conversación",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO logs_sistema (modulo, accion, detalles, nivel) VALUES (\n  'whatsapp_handler',\n  'mensaje_recibido',\n  $1,\n  'info'\n);",
+        "additionalFields": {
+          "queryReplacement": "{{ JSON.stringify($json) }}"
+        }
+      },
+      "id": "log-system",
+      "name": "Registrar Log Sistema",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [1560, 300]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Eventos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Eventos": {
+      "main": [
+        [
+          {
+            "node": "Extraer Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Detectar Comandos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Comandos": {
+      "main": [
+        [
+          {
+            "node": "Conectar Evolution API",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enviar Mensaje Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conectar Evolution API": {
+      "main": [
+        [
+          {
+            "node": "Registrar Conversación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Mensaje Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Registrar Conversación",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Conversación": {
+      "main": [
+        [
+          {
+            "node": "Registrar Log Sistema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-08-07T20:30:00.000Z",
+      "updatedAt": "2024-08-07T20:30:00.000Z",
+      "id": "mqn-whatsapp",
+      "name": "MQN"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-08-07T20:30:00.000Z",
+  "versionId": "1"
+}
