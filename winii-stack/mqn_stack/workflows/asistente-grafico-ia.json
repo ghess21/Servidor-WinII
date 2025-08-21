@@ -1,0 +1,496 @@
+{
+  "name": "MQN Asistente Gráfico de IA - WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minute",
+              "expression": "*/1"
+            }
+          ]
+        }
+      },
+      "id": "trigger-whatsapp",
+      "name": "Trigger WhatsApp",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "url": "http://localhost:5678/api/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "mqn_api_key_2024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "get-whatsapp-messages",
+      "name": "Get WhatsApp Messages",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filtrar mensajes relacionados con diseño gráfico\nconst messages = $input.all();\nconst designKeywords = [\n  'diseño', 'diseñar', 'logo', 'playera', 'taza', 'poster', 'tarjeta',\n  'dibujo', 'imagen', 'arte', 'gráfico', 'vector', 'eps', 'svg',\n  'crear', 'hacer', 'generar', 'dragon', 'flor', 'texto', 'letra'\n];\n\nconst designRequests = messages.filter(msg => {\n  const content = msg.body?.toLowerCase() || '';\n  return designKeywords.some(keyword => content.includes(keyword));\n});\n\nreturn designRequests.map(msg => ({\n  messageId: msg.id,\n  from: msg.from,\n  body: msg.body,\n  timestamp: msg.timestamp,\n  type: 'design_request'\n}));"
+      },
+      "id": "filter-design-requests",
+      "name": "Filter Design Requests",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "check-design-requests",
+      "name": "Check Design Requests",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Analizar la solicitud de diseño y extraer parámetros\nconst requests = $input.all();\nconst analyzedRequests = [];\n\nfor (const request of requests) {\n  const body = request.body.toLowerCase();\n  \n  // Detectar tipo de producto\n  let productType = 'playera';\n  if (body.includes('taza') || body.includes('vaso')) productType = 'taza';\n  else if (body.includes('poster') || body.includes('cartel')) productType = 'poster';\n  else if (body.includes('tarjeta') || body.includes('carta')) productType = 'tarjeta';\n  \n  // Detectar estilo\n  let style = 'moderno';\n  if (body.includes('vintage') || body.includes('retro')) style = 'vintage';\n  else if (body.includes('japones') || body.includes('oriental')) style = 'japones';\n  else if (body.includes('minimalista') || body.includes('simple')) style = 'minimalista';\n  \n  // Detectar colores\n  const colors = [];\n  if (body.includes('azul')) colors.push('azul');\n  if (body.includes('rojo')) colors.push('rojo');\n  if (body.includes('verde')) colors.push('verde');\n  if (body.includes('negro')) colors.push('negro');\n  if (body.includes('blanco')) colors.push('blanco');\n  \n  // Detectar elementos\n  const elements = [];\n  if (body.includes('dragon')) elements.push('dragon');\n  if (body.includes('flor')) elements.push('flor');\n  if (body.includes('logo')) elements.push('logo');\n  if (body.includes('texto')) elements.push('texto');\n  \n  analyzedRequests.push({\n    ...request,\n    analysis: {\n      productType,\n      style,\n      colors: colors.length > 0 ? colors : ['azul'],\n      elements: elements.length > 0 ? elements : ['diseño'],\n      complexity: body.includes('complejo') || body.includes('detallado') ? 'alta' : 'baja'\n    }\n  });\n}\n\nreturn analyzedRequests;"
+      },
+      "id": "analyze-design-request",
+      "name": "Analyze Design Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8000/api/v1/designs/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.MQN_AI_API_KEY }}"
+            }
+          ]
+        },
+        "jsonParameters": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "user_request",
+              "value": "={{ $json.body }}"
+            },
+            {
+              "name": "product_type",
+              "value": "={{ $json.analysis.productType }}"
+            },
+            {
+              "name": "style",
+              "value": "={{ $json.analysis.style }}"
+            },
+            {
+              "name": "colors",
+              "value": "={{ $json.analysis.colors }}"
+            },
+            {
+              "name": "elements",
+              "value": "={{ $json.analysis.elements }}"
+            },
+            {
+              "name": "complexity",
+              "value": "={{ $json.analysis.complexity }}"
+            },
+            {
+              "name": "whatsapp_number",
+              "value": "={{ $json.from }}"
+            }
+          ]
+        }
+      },
+      "id": "generate-design-ai",
+      "name": "Generate Design with AI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Preparar respuesta para el cliente\nconst designResult = $input.first();\nconst originalRequest = $('Analyze Design Request').first();\n\nif (designResult.success) {\n  return {\n    to: originalRequest.from,\n    message: `🎨 ¡Tu diseño está listo!\n\n📋 Detalles:\n• Producto: ${originalRequest.analysis.productType}\n• Estilo: ${originalRequest.analysis.style}\n• Colores: ${originalRequest.analysis.colors.join(', ')}\n\n🔗 Descargar EPS: ${designResult.eps_download_url}\n📱 Vista previa: ${designResult.preview_url}\n\n💰 Precio estimado: $${designResult.estimated_price} MXN\n\n⏳ Tiempo de validación: 1-2 horas\n\n¿Te gusta el diseño? Responde con:\n✅ SÍ - Para aprobar\n❌ NO - Para solicitar cambios\n🔄 CAMBIAR - Para modificar`\n  };\n} else {\n  return {\n    to: originalRequest.from,\n    message: `❌ Lo siento, hubo un problema generando tu diseño.\n\n🔍 Error: ${designResult.error}\n\n💡 Intenta ser más específico, por ejemplo:\n\"Quiero una playera con un dragón azul estilo japonés\"\n\n👨‍💼 O contacta a nuestro equipo: 9671262441`\n  };\n}"
+      },
+      "id": "prepare-client-response",
+      "name": "Prepare Client Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:5678/api/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "mqn_api_key_2024"
+            }
+          ]
+        },
+        "jsonParameters": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.to }}"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json.message }}"
+            }
+          ]
+        }
+      },
+      "id": "send-client-response",
+      "name": "Send Client Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1780, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Registrar la solicitud de diseño en la base de datos\nconst designRequest = $('Analyze Design Request').first();\nconst aiResponse = $('Generate Design with AI').first();\n\nconst designRecord = {\n  user_whatsapp: designRequest.from,\n  request_text: designRequest.body,\n  product_type: designRequest.analysis.productType,\n  style: designRequest.analysis.style,\n  colors: designRequest.analysis.colors,\n  elements: designRequest.analysis.elements,\n  complexity: designRequest.analysis.complexity,\n  ai_generated: true,\n  status: aiResponse.success ? 'generated' : 'failed',\n  eps_file_path: aiResponse.success ? aiResponse.eps_download_url : null,\n  preview_url: aiResponse.success ? aiResponse.preview_url : null,\n  estimated_price: aiResponse.success ? aiResponse.estimated_price : null,\n  error_message: aiResponse.success ? null : aiResponse.error,\n  created_at: new Date().toISOString()\n};\n\n// Enviar a la base de datos MQN\nreturn designRecord;"
+      },
+      "id": "log-design-request",
+      "name": "Log Design Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8000/api/v1/designs/log",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.MQN_AI_API_KEY }}"
+            }
+          ]
+        },
+        "jsonParameters": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "design_data",
+              "value": "={{ $json }}"
+            }
+          ]
+        }
+      },
+      "id": "save-to-database",
+      "name": "Save to Database",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1560, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Notificar al equipo técnico sobre nuevo diseño\nconst designRequest = $('Analyze Design Request').first();\nconst aiResponse = $('Generate Design with AI').first();\n\nif (aiResponse.success) {\n  const notification = {\n    to: '9671262441',\n    message: `🎨 NUEVO DISEÑO GENERADO POR IA\n\n👤 Cliente: ${designRequest.from}\n📋 Solicitud: ${designRequest.body}\n🎯 Producto: ${designRequest.analysis.productType}\n🎨 Estilo: ${designRequest.analysis.style}\n💰 Precio: $${aiResponse.estimated_price} MXN\n\n🔗 EPS: ${aiResponse.eps_download_url}\n📱 Preview: ${aiResponse.preview_url}\n\n⏰ Generado: ${new Date().toLocaleString('es-MX')}\n\n✅ Revisar y validar antes de aprobar al cliente`\n  };\n  \n  return notification;\n} else {\n  return null;\n}"
+      },
+      "id": "notify-technical-team",
+      "name": "Notify Technical Team",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json }}",
+              "rightValue": null,
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "check-notification",
+      "name": "Check Notification",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2000, 400]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:5678/api/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "mqn_api_key_2024"
+            }
+          ]
+        },
+        "jsonParameters": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{ $json.to }}"
+            },
+            {
+              "name": "body",
+              "value": "={{ $json.message }}"
+            }
+          ]
+        }
+      },
+      "id": "send-team-notification",
+      "name": "Send Team Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2220, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Respuesta cuando no hay solicitudes de diseño\nreturn {\n  message: 'No hay solicitudes de diseño pendientes en este momento.'\n};"
+      },
+      "id": "no-design-requests",
+      "name": "No Design Requests",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 500]
+    }
+  ],
+  "connections": {
+    "Trigger WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Get WhatsApp Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get WhatsApp Messages": {
+      "main": [
+        [
+          {
+            "node": "Filter Design Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Design Requests": {
+      "main": [
+        [
+          {
+            "node": "Check Design Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Design Requests": {
+      "main": [
+        [
+          {
+            "node": "Analyze Design Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Design Requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Design Request": {
+      "main": [
+        [
+          {
+            "node": "Generate Design with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Design with AI": {
+      "main": [
+        [
+          {
+            "node": "Prepare Client Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Client Response": {
+      "main": [
+        [
+          {
+            "node": "Send Client Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Design Request": {
+      "main": [
+        [
+          {
+            "node": "Log Design Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Design Request": {
+      "main": [
+        [
+          {
+            "node": "Save to Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Database": {
+      "main": [
+        [
+          {
+            "node": "Notify Technical Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Technical Team": {
+      "main": [
+        [
+          {
+            "node": "Check Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Notification": {
+      "main": [
+        [
+          {
+            "node": "Send Team Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-01-15T00:00:00.000Z",
+      "updatedAt": "2025-01-15T00:00:00.000Z",
+      "id": "1",
+      "name": "MQN"
+    },
+    {
+      "createdAt": "2025-01-15T00:00:00.000Z",
+      "updatedAt": "2025-01-15T00:00:00.000Z",
+      "id": "2",
+      "name": "IA"
+    },
+    {
+      "createdAt": "2025-01-15T00:00:00.000Z",
+      "updatedAt": "2025-01-15T00:00:00.000Z",
+      "id": "3",
+      "name": "WhatsApp"
+    },
+    {
+      "createdAt": "2025-01-15T00:00:00.000Z",
+      "updatedAt": "2025-01-15T00:00:00.000Z",
+      "id": "4",
+      "name": "Diseño"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-15T00:00:00.000Z",
+  "versionId": "1"
+}

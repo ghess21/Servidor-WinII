@@ -1,0 +1,132 @@
+{
+  "name": "MQN Bienvenida - Media Quality Net",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bienvenida-mqn",
+        "options": {}
+      },
+      "id": "webhook-bienvenida",
+      "name": "Webhook Bienvenida",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "bienvenida-mqn"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer información del mensaje entrante\nconst input = $input.first().json;\n\n// Extraer datos del mensaje\nlet phoneNumber = '';\nlet messageText = '';\nlet messageType = 'texto';\nlet userName = 'Cliente';\n\n// Si es un mensaje de WhatsApp\nif (input.data && input.data.key) {\n  phoneNumber = input.data.key.remoteJid.replace('@s.whatsapp.net', '');\n  \n  if (input.data.message.conversation) {\n    messageText = input.data.message.conversation;\n  } else if (input.data.message.extendedTextMessage) {\n    messageText = input.data.message.extendedTextMessage.text;\n  } else if (input.data.message.imageMessage) {\n    messageText = 'Imagen recibida';\n    messageType = 'imagen';\n  }\n} else {\n  // Si es una llamada directa al webhook\n  phoneNumber = input.phone || 'sistema';\n  messageText = input.message || 'hola';\n  userName = input.name || 'Usuario';\n}\n\n// Detectar comandos\nconst text = messageText.toLowerCase();\nlet command = 'bienvenida';\n\nif (text.includes('catalogo') || text.includes('productos')) {\n  command = 'catalogo';\n} else if (text.includes('venta') || text.includes('cotizar')) {\n  command = 'venta';\n} else if (text.includes('precio') || text.includes('costo')) {\n  command = 'precios';\n} else if (text.includes('ayuda') || text.includes('servicios')) {\n  command = 'ayuda';\n} else if (text.includes('estado') || text.includes('sistema')) {\n  command = 'estado';\n}\n\nreturn {\n  phoneNumber,\n  messageText,\n  messageType,\n  userName,\n  command,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "procesar-mensaje",
+      "name": "Procesar Mensaje",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "command-bienvenida",
+              "leftValue": "={{ $json.command }}",
+              "rightValue": "bienvenida",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "detectar-bienvenida",
+      "name": "Detectar Bienvenida",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generar mensaje de bienvenida\nconst userName = $('Procesar Mensaje').item.json.userName;\nconst phoneNumber = $('Procesar Mensaje').item.json.phoneNumber;\n\nconst welcomeMessage = `🎨 *¡Bienvenido a Media Quality Net!* 🎨\n\nHola ${userName}, soy tu asistente virtual de MQN.\n\n*Nuestros servicios:*\n• 🖼️ Impresión digital de alta calidad\n• 👕 Serigrafía y sublimación\n• 🎯 Productos personalizados\n• 📱 Atención multicanal\n\n*Comandos disponibles:*\n• \"catalogo\" - Ver productos\n• \"venta\" - Crear cotización\n• \"precios\" - Consultar tarifas\n• \"ayuda\" - Más información\n• \"estado\" - Estado del sistema\n\n*Contacto:*\n📞 WhatsApp: ${phoneNumber}\n🏢 Horario: Lunes a Viernes 9:00-18:00\n\n¿En qué puedo ayudarte hoy? 😊`;\n\nreturn {\n  message: welcomeMessage,\n  phoneNumber,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "mensaje-bienvenida",
+      "name": "Mensaje Bienvenida",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log del sistema\nconst logEntry = {\n  timestamp: new Date().toISOString(),\n  evento: 'bienvenida_mqn',\n  usuario: $('Procesar Mensaje').item.json.userName,\n  telefono: $('Procesar Mensaje').item.json.phoneNumber,\n  comando: $('Procesar Mensaje').item.json.command,\n  respuesta: 'enviada',\n  estado: 'exitoso'\n};\n\nconsole.log('MQN Bienvenida:', JSON.stringify(logEntry, null, 2));\n\nreturn logEntry;"
+      },
+      "id": "log-sistema",
+      "name": "Log Sistema",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 200]
+    }
+  ],
+  "connections": {
+    "Webhook Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Procesar Mensaje",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Mensaje": {
+      "main": [
+        [
+          {
+            "node": "Detectar Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detectar Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Mensaje Bienvenida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensaje Bienvenida": {
+      "main": [
+        [
+          {
+            "node": "Log Sistema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-15T00:00:00.000Z",
+  "versionId": "1"
+}

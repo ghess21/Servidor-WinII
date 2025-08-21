@@ -1,17 +1,11 @@
-# Módulo postgres_api
+# Servicio: postgres_api
 
-## Rol
-Exposición REST para PostgreSQL usando PostgREST.
+🔧 Puerto por defecto: 3001  
+🧾 Este módulo fue generado automáticamente por setup_services.sh
 
-## Puertos
-- 3001
+## Archivos incluidos
+- Dockerfile
+- validate.sh
+- README.md
 
-## Variables relevantes
-ENV PGRST_DB_URI=""
-ENV PGRST_DB_ANON_ROLE="anon"
-
-## Ejecución
-```bash
-docker-compose up postgres_api
-```
-
+Puedes personalizar este módulo en: mcp_stack/postgres_api/

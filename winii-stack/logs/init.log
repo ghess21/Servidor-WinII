@@ -1144,3 +1144,102 @@ NAMES     STATUS
 📦 Backup creado: docker-compose.yml.bak
 ✅ Compose generado exitosamente: docker-compose.yml
 [INIT] Estado de contenedores:
+[INIT] Inicio - 2025-08-08 14:17:33
+[H[2J[3J🛠️ Bienvenido al asistente de configuración
+🔍 Preparando entorno inicial...
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+✅ create_env.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+✅ create_env.sh tiene permisos de ejecución
+
+🧭 ¿Qué deseas hacer?
+1) Configurar servicios (setup_services.sh)
+2) Ejecutar validaciones (validate.sh)
+3) Renderizar docker-compose (render_compose.sh)
+4) Instalar stack completo (install_stack.sh)
+5) Configurar vía flujo interactivo (setup_interactivo.sh)
+6) Crear archivo .env (create_env.sh)
+7) 🚀 Instalación avanzada con monitoreo (install_stack_advanced.sh)
+8) 📊 Monitoreo del stack (monitor_stack.sh)
+9) 📈 Monitoreo de recursos (monitor_resources.sh)
+0) Salir
+🔐 Activando permisos de ejecución en scripts esenciales...
+✅ assistant.sh habilitado
+✅ setup_services.sh habilitado
+✅ validate.sh habilitado
+✅ render_compose.sh habilitado
+✅ setup_interactivo.sh habilitado
+✅ install_stack.sh habilitado
+✅ create_env.sh habilitado
+🔍 Verificando permisos en scripts críticos...
+✅ assistant.sh tiene permisos de ejecución
+✅ setup_services.sh tiene permisos de ejecución
+✅ validate.sh tiene permisos de ejecución
+✅ render_compose.sh tiene permisos de ejecución
+✅ setup_interactivo.sh tiene permisos de ejecución
+✅ install_stack.sh tiene permisos de ejecución
+✅ create_env.sh tiene permisos de ejecución
+🔧 Asistente avanzado — Configuración modular
+¿Activar Redis? (s/n)
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+✅ Puerto 5678 disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml
+✅ Entorno cargado y validado correctamente
+[VALIDATE] Verificando puertos, variables, semántica, dependencias y estructura...
+🔍 Validando variables obligatorias...
+
+🧠 Validando semántica...
+✅ Puerto 6379 disponible
+✅ Puerto 5432 disponible
+✅ Puerto 5678 disponible
+
+🔧 Verificando herramientas requeridas...
+
+📁 Validando estructura de carpetas y archivos...
+✅ Archivo presente: scripts/env.sh
+✅ Archivo presente: scripts/render_compose.sh
+✅ Archivo presente: templates/docker-compose.yml.tpl
+✅ Archivo presente: .env
+✅ Carpeta presente: scripts
+✅ Carpeta presente: templates
+✅ Carpeta presente: logs
+
+[VALIDATE] Todo OK ✅
+✅ Entorno cargado y validado correctamente
+[RENDER] Generando docker-compose.yml desde plantilla...
+📦 Backup creado: docker-compose.yml.bak
+✅ Compose generado exitosamente: docker-compose.yml

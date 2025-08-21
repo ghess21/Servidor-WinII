@@ -1,0 +1,43 @@
+{
+  "name": "MQN Bienvenida Simple",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bienvenida-mqn"
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst userName = input.name || 'Usuario';\nconst phoneNumber = input.phone || 'sistema';\n\nconst message = `🎨 ¡Bienvenido a Media Quality Net! 🎨\\n\\nHola ${userName}!\\n\\nSomos especialistas en:\\n• Impresión digital\\n• Serigrafía\\n• Sublimación\\n\\nContacto: ${phoneNumber}\\n\\n¿En qué podemos ayudarte?`;\n\nreturn { message, phoneNumber, userName };"
+      },
+      "name": "Generar Respuesta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generar Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

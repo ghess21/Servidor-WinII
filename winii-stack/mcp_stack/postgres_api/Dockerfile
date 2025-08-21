@@ -1,3 +1,2 @@
-FROM postgrest/postgrest:latest
-ENV PGRST_DB_URI=""
-ENV PGRST_DB_ANON_ROLE="anon"
+FROM alpine
+CMD echo "Servicio postgres_api corriendo en puerto 3001"

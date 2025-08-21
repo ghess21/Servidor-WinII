@@ -1,6 +1,2 @@
-FROM python:3.10-slim
-WORKDIR /app
-COPY model/ /app/model
-RUN pip install streamlit
-EXPOSE 8501
-CMD ["streamlit", "run", "/app/model/main.py"]
+FROM alpine
+CMD echo "Servicio model_runner corriendo en puerto 8501"

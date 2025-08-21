@@ -49,9 +49,13 @@ echo "6) Crear archivo .env (create_env.sh)"
 echo "7) 🚀 Instalación avanzada con monitoreo (install_stack_advanced.sh)"
 echo "8) 📊 Monitoreo del stack (monitor_stack.sh)"
 echo "9) 📈 Monitoreo de recursos (monitor_resources.sh)"
+echo "10) 🧪 Probar conectividad SMB (test_smb_connection.sh)"
+echo "11) 🔧 Configurar backup automático SMB (setup_backup_cron.sh)"
+echo "12) 💾 Backup manual a SMB (backup_smb_diario.sh)"
+echo "13) 🎛️ Gestor unificado de backups (gestor_backups_unificado.sh)"
 echo "0) Salir"
 
-read -p "📝 Selecciona una opción [0-9]: " opcion
+read -p "📝 Selecciona una opción [0-13]: " opcion
 
 case "$opcion" in
   1) bash scripts/setup_services.sh ;;
@@ -63,6 +67,10 @@ case "$opcion" in
   7) bash scripts/install_stack_advanced.sh ;;
   8) bash scripts/monitor_stack.sh ;;
   9) bash scripts/monitor_resources.sh ;;
+  10) bash scripts/test_smb_connection.sh ;;
+  11) bash scripts/setup_backup_cron.sh ;;
+  12) bash scripts/backup_smb_diario.sh ;;
+  13) bash scripts/gestor_backups_unificado.sh ;;
   0) echo "👋 Saliendo del asistente. ¡Hasta pronto!" ;;
   *) echo "❌ Opción inválida. Intenta nuevamente." ;;
 esac

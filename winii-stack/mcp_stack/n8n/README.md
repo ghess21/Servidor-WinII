@@ -1,16 +1,11 @@
-# Módulo n8n
+# Servicio: n8n
 
-## Rol
-Automatización de workflows con interfaz web.
+🔧 Puerto por defecto: 5678  
+🧾 Este módulo fue generado automáticamente por setup_services.sh
 
-## Puertos
-- 5678
+## Archivos incluidos
+- Dockerfile
+- validate.sh
+- README.md
 
-## Variables relevantes
-
-
-## Ejecución
-```bash
-docker-compose up n8n
-```
-
+Puedes personalizar este módulo en: mcp_stack/n8n/

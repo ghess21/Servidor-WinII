@@ -1,0 +1,124 @@
+version: '3.8'
+
+services:
+  # Frontend React
+  frontend_ai:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_WS_URL=ws://localhost:8000/ws
+    depends_on:
+      - backend_ai
+    networks:
+      - ai_network
+
+  # Backend FastAPI
+  backend_ai:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./uploads:/app/uploads
+      - ./generated:/app/generated
+    environment:
+      - DATABASE_URL=postgresql://mqn_user:mqn_password@postgres_ai:5432/ai_designs_db
+      - REDIS_URL=redis://redis_ai:6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - STABLE_DIFFUSION_URL=${STABLE_DIFFUSION_URL}
+    depends_on:
+      - postgres_ai
+      - redis_ai
+    networks:
+      - ai_network
+
+  # Base de datos PostgreSQL para diseños
+  postgres_ai:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ai_designs_db
+      POSTGRES_USER: mqn_user
+      POSTGRES_PASSWORD: mqn_password
+    volumes:
+      - postgres_ai_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+    networks:
+      - ai_network
+
+  # Redis para caché y sesiones
+  redis_ai:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_ai_data:/data
+    networks:
+      - ai_network
+
+  # Servicio de generación de EPS
+  eps_generator:
+    build: ./eps_generator
+    volumes:
+      - ./uploads:/app/uploads
+      - ./generated:/app/generated
+      - ./templates:/app/templates
+    environment:
+      - INKSCAPE_PATH=/usr/bin/inkscape
+      - IMAGEMAGICK_PATH=/usr/bin/convert
+    networks:
+      - ai_network
+
+  # Servicio de IA para generación de imágenes
+  ai_image_generator:
+    build: ./ai_engine
+    volumes:
+      - ./generated:/app/generated
+      - ./models:/app/models
+    environment:
+      - STABLE_DIFFUSION_URL=${STABLE_DIFFUSION_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - ai_network
+
+  # Servicio de validación técnica
+  validation_service:
+    build: ./validation_system
+    volumes:
+      - ./generated:/app/generated
+      - ./validation_reports:/app/reports
+    environment:
+      - VALIDATION_LEVEL=strict
+      - AUTO_APPROVAL=false
+    networks:
+      - ai_network
+
+  # Nginx para proxy reverso
+  nginx_ai:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./generated:/var/www/generated
+    depends_on:
+      - frontend_ai
+      - backend_ai
+    networks:
+      - ai_network
+
+volumes:
+  postgres_ai_data:
+  redis_ai_data:
+
+networks:
+  ai_network:
+    driver: bridge

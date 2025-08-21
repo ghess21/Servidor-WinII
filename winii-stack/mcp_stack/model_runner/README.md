@@ -1,16 +1,11 @@
-# Módulo model_runner
+# Servicio: model_runner
 
-## Rol
-Servicio para ejecutar modelos vía Streamlit.
+🔧 Puerto por defecto: 8501  
+🧾 Este módulo fue generado automáticamente por setup_services.sh
 
-## Puertos
-- 8501
+## Archivos incluidos
+- Dockerfile
+- validate.sh
+- README.md
 
-## Variables relevantes
-
-
-## Ejecución
-```bash
-docker-compose up model_runner
-```
-
+Puedes personalizar este módulo en: mcp_stack/model_runner/

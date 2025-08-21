@@ -1,0 +1,269 @@
+# 🐳 Docker Compose - Ecosistema Media Quality Net (Versión Simplificada)
+version: '3.8'
+
+services:
+  # 🗄️ Base de datos principal
+  postgres_mqn:
+    image: postgres:16
+    container_name: mqn_postgres
+    environment:
+      POSTGRES_DB: mqn_ecosistema
+      POSTGRES_USER: mqn_user
+      POSTGRES_PASSWORD: mqn_password_2024
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+      - ./database/backups:/backups
+    ports:
+      - "5434:5432"
+    networks:
+      - mqn_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mqn_user -d mqn_ecosistema"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 🔴 Cache y sesiones
+  redis_mqn:
+    image: redis:7-alpine
+    container_name: mqn_redis
+    command: redis-server --appendonly yes --requirepass mqn_redis_2024
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6380:6379"
+    networks:
+      - mqn_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 🤖 n8n para automatización (CONFIGURACIÓN SIMPLIFICADA)
+  n8n_mqn:
+    image: n8nio/n8n:latest
+    container_name: mqn_n8n
+    environment:
+      # Configuración básica
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      
+      # Autenticación
+      - N8N_USER_MANAGEMENT_DISABLED=false
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=MQNn8n2024!
+      
+      # Base de datos
+      - N8N_DATABASE_TYPE=postgresdb
+      - N8N_DATABASE_POSTGRESDB_HOST=postgres_mqn
+      - N8N_DATABASE_POSTGRESDB_PORT=5432
+      - N8N_DATABASE_POSTGRESDB_DATABASE=n8n_mqn
+      - N8N_DATABASE_POSTGRESDB_USER=n8n_user
+      - N8N_DATABASE_POSTGRESDB_PASSWORD=n8n_password_2024
+      
+      # Redis
+      - N8N_REDIS_HOST=redis_mqn
+      - N8N_REDIS_PORT=6379
+      - N8N_REDIS_PASSWORD=mqn_redis_2024
+      
+      # Configuración de seguridad
+      - N8N_SECURITY_OAUTH2_DISABLED=true
+      
+      # Configuración de telemetría
+      - N8N_TELEMETRY_ENABLED=false
+      - N8N_DIAGNOSTICS_ENABLED=false
+      
+      # Configuración de archivos
+      - N8N_FILES_BACKEND=local
+      - N8N_FILES_LOCAL_STORAGE_PATH=/home/node/.n8n/files
+      
+      # Configuración de propietario
+      - N8N_OWNER_EMAIL=admin@mqn.com
+      - N8N_OWNER_FIRST_NAME=Admin
+      - N8N_OWNER_LAST_NAME=MQN
+      
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/home/node/.n8n/workflows
+      - ./n8n/credentials:/home/node/.n8n/credentials
+      - ./n8n/files:/home/node/.n8n/files
+    ports:
+      - "5678:5678"
+    networks:
+      - mqn_network
+    depends_on:
+      postgres_mqn:
+        condition: service_healthy
+      redis_mqn:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5678"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 📱 WhatsApp Evolution API para análisis de mensajes
+  whatsapp_evolution:
+    image: davidsongomes/evolution-api:latest
+    container_name: mqn_whatsapp
+    environment:
+      # Configuración de base de datos
+      - DATABASE_ENABLED=true
+      - DATABASE_CONNECTION_URI=postgresql://mqn_user:mqn_password_2024@postgres_mqn:5432/whatsapp_evolution
+      
+      # Configuración de Redis
+      - REDIS_ENABLED=true
+      - REDIS_URI=redis://:mqn_redis_2024@redis_mqn:6379
+      
+      # Configuración de seguridad
+      - AUTHENTICATION_API_KEY=mqn_whatsapp_key_2024
+      - AUTHENTICATION_EXPOSE_IN_FETCH_INSTANCES=true
+      
+      # Configuración de webhooks
+      - WEBHOOK_BY_EVENTS=true
+      - WEBHOOK_GLOBAL_URL=http://n8n_mqn:5678/webhook/whatsapp
+      
+      # Configuración de logs
+      - LOG_LEVEL=INFO
+      - LOG_COLOR=true
+      
+      # Configuración de archivos
+      - STORE_CLEANING_INTERVAL=7200
+      - STORE_MESSAGE=true
+      - STORE_CONTACTS=true
+      - STORE_CHATS=true
+      
+    volumes:
+      - whatsapp_data:/evolution/instances
+      - ./whatsapp/instances:/evolution/instances
+      - ./whatsapp/store:/evolution/store
+    ports:
+      - "8080:8080"
+    networks:
+      - mqn_network
+    depends_on:
+      postgres_mqn:
+        condition: service_healthy
+      redis_mqn:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 🧠 Servicio de IA para análisis de mensajes
+  ai_analysis_service:
+    image: python:3.11-slim
+    container_name: mqn_ai_analysis
+    environment:
+      # Configuración de base de datos
+      - DATABASE_URL=postgresql://mqn_user:mqn_password_2024@postgres_mqn:5432/mqn_ecosistema
+      - REDIS_URL=redis://:mqn_redis_2024@redis_mqn:6379
+      
+      # Configuración de APIs de IA
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - WHISPER_MODEL=base
+      
+      # Configuración del servicio
+      - SERVICE_PORT=8001
+      - LOG_LEVEL=INFO
+      
+    volumes:
+      - ./ai_service:/app
+      - ai_service_data:/app/data
+    working_dir: /app
+    command: >
+      sh -c "pip install -r requirements.txt &&
+              python -m uvicorn main:app --host 0.0.0.0 --port 8001"
+    ports:
+      - "8001:8001"
+    networks:
+      - mqn_network
+    depends_on:
+      postgres_mqn:
+        condition: service_healthy
+      redis_mqn:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 🌐 Frontend Next.js - Página web pública de MQN
+  frontend_mqn:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: mqn_frontend
+    environment:
+      # Configuración del frontend
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - NEXT_PUBLIC_API_URL=http://localhost:8001
+      - NEXT_PUBLIC_N8N_URL=http://localhost:5678
+      - NEXT_PUBLIC_WHATSAPP_URL=http://localhost:8080
+      
+    ports:
+      - "3000:3000"
+    networks:
+      - mqn_network
+    depends_on:
+      - ai_analysis_service
+      - n8n_mqn
+      - whatsapp_evolution
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 📊 Monitoreo y logs
+  monitoring:
+    image: grafana/grafana:latest
+    container_name: mqn_monitoring
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=mqn_monitoring_2024
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - monitoring_data:/var/lib/grafana
+      - ./monitoring/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/datasources:/etc/grafana/provisioning/datasources
+    ports:
+      - "3001:3000"
+    networks:
+      - mqn_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  n8n_data:
+    driver: local
+  whatsapp_data:
+    driver: local
+  ai_service_data:
+    driver: local
+  monitoring_data:
+    driver: local
+
+networks:
+  mqn_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
