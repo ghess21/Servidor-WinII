@@ -47,12 +47,28 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 if OPENAI_API_KEY:
     openai.api_key = OPENAI_API_KEY
 
-# Configuración de base de datos
-engine = create_async_engine(DATABASE_URL)
+# Configuración de base de datos con timeouts
+engine = create_async_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=3600,
+    connect_args={
+        "connect_timeout": 30,
+        "command_timeout": 60,
+    }
+)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-# Configuración de Redis
-redis_client = redis.from_url(REDIS_URL)
+# Configuración de Redis con pool de conexiones y timeouts
+redis_client = redis.from_url(
+    REDIS_URL,
+    encoding="utf-8",
+    decode_responses=True,
+    socket_connect_timeout=10,
+    socket_timeout=10,
+    retry_on_timeout=True,
+    health_check_interval=30
+)
 
 # Modelos de datos
 class WhatsAppMessage(BaseModel):
@@ -140,15 +156,25 @@ async def analyze_message_with_ai(message: WhatsAppMessage) -> Dict[str, Any]:
         Extrae toda la información relevante sobre productos, materiales y intenciones del cliente.
         """
         
-        response = await openai.ChatCompletion.acreate(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=0.1,
-            max_tokens=1000
-        )
+        # Configurar timeout para OpenAI
+        import asyncio
+        
+        try:
+            response = await asyncio.wait_for(
+                openai.ChatCompletion.acreate(
+                    model="gpt-4",
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    temperature=0.1,
+                    max_tokens=1000,
+                    timeout=30  # 30 segundos timeout
+                ),
+                timeout=45  # 45 segundos timeout total
+            )
+        except asyncio.TimeoutError:
+            raise HTTPException(status_code=504, detail="Timeout en análisis de IA - servicio demoró demasiado")
         
         # Parsear respuesta JSON
         analysis_text = response.choices[0].message.content
@@ -212,12 +238,19 @@ async def analyze_whatsapp_message(
             raw_analysis=analysis_result
         )
         
-        # Guardar en Redis para cache
-        await redis_client.setex(
-            f"analysis:{message.message_id}",
-            3600,  # 1 hora
-            json.dumps(result.dict())
-        )
+        # Guardar en Redis para cache con timeout
+        try:
+            await asyncio.wait_for(
+                redis_client.setex(
+                    f"analysis:{message.message_id}",
+                    3600,  # 1 hora
+                    json.dumps(result.dict())
+                ),
+                timeout=10  # 10 segundos timeout para Redis
+            )
+        except asyncio.TimeoutError:
+            logger.warning(f"Timeout guardando en Redis para mensaje {message.message_id}")
+            # Continuar sin fallar - el cache no es crítico
         
         # Tarea en background para guardar en base de datos
         background_tasks.add_task(save_analysis_to_db, result)
@@ -251,10 +284,17 @@ async def get_analysis_result(message_id: str):
     Obtiene el resultado de un análisis previo
     """
     try:
-        # Buscar en cache primero
-        cached_result = await redis_client.get(f"analysis:{message_id}")
-        if cached_result:
-            return json.loads(cached_result)
+        # Buscar en cache primero con timeout
+        try:
+            cached_result = await asyncio.wait_for(
+                redis_client.get(f"analysis:{message_id}"),
+                timeout=5  # 5 segundos timeout para búsqueda
+            )
+            if cached_result:
+                return json.loads(cached_result)
+        except asyncio.TimeoutError:
+            logger.warning(f"Timeout buscando en Redis para mensaje {message_id}")
+            # Continuar a buscar en base de datos
         
         # Si no está en cache, buscar en base de datos
         # Implementar búsqueda en DB
